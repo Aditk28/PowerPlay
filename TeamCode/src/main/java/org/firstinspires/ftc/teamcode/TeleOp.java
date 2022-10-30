@@ -38,7 +38,7 @@ public class TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Status", "Robot is Initialized");
         telemetry.update();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -50,7 +50,7 @@ public class TeleOp extends LinearOpMode {
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        leftClaw = hardwareMap.get(Servo.class, "leftClawa");
+        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         liftMotor = hardwareMap.get(DcMotorEx.class, "liftMotor");
         liftMotor2 = hardwareMap.get(DcMotorEx.class, "liftMotor");
 
@@ -65,7 +65,7 @@ public class TeleOp extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            //intakeMotor
+            //clawMotor
             if (gamepad2.right_bumper || gamepad1.right_bumper) {
                 rightClaw.setPosition(pickPosition);
                 leftClaw.setPosition(pickPosition);
@@ -75,7 +75,7 @@ public class TeleOp extends LinearOpMode {
             }
 
             //Lift
-            if (gamepad2.left_trigger != 0 || gamepad1.left_trigger != 0 && liftMotor.getCurrentPosition() >= -100) {
+            if (gamepad2.left_trigger != 0 || gamepad1.left_trigger != 0 && liftMotor.getCurrentPosition() >= 0) {
                 liftMotor.setPower(-0.45);
             } else if (gamepad2.right_trigger != 0 || gamepad1.right_trigger != 0 && liftMotor.getCurrentPosition() <= 2050) {
                 if (liftMotor.getCurrentPosition() >= 1500) {
@@ -149,7 +149,7 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("Normal Speed: ", robotSpeed);
             telemetry.addData("OTHER", "------------------------------------");
             telemetry.addData("LiftMotor Position: ", liftMotor.getCurrentPosition());
-
+            telemetry.update();
 
         }
     }
