@@ -31,8 +31,8 @@ public class TeleOp extends LinearOpMode {
     public static final double NORMAL_SPEED = 0.8;
     public static final double TURTLE_SPEED = 0.25;
     public double robotSpeed = NORMAL_SPEED;
-    public double dropPosition = .5;
-    public double pickPosition = .1;
+    public double dropPosition = .3;
+    public double pickPosition = .8;
     public double rotationSpeed = .75;
 
 
@@ -53,7 +53,8 @@ public class TeleOp extends LinearOpMode {
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         liftMotor = hardwareMap.get(DcMotorEx.class, "liftMotor");
         liftMotor2 = hardwareMap.get(DcMotorEx.class, "liftMotor");
-
+        rightClaw.setDirection(Servo.Direction.REVERSE);
+        leftClaw.setDirection(Servo.Direction.REVERSE);
         liftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
@@ -72,6 +73,8 @@ public class TeleOp extends LinearOpMode {
             } else if (gamepad2.left_bumper || gamepad1.left_bumper) {
                 rightClaw.setPosition(dropPosition);
                 leftClaw.setPosition(dropPosition);
+                rightClaw.setDirection(Servo.Direction.REVERSE);
+                leftClaw.setDirection(Servo.Direction.REVERSE);
             }
 
             //Lift
@@ -149,6 +152,10 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("Normal Speed: ", robotSpeed);
             telemetry.addData("OTHER", "------------------------------------");
             telemetry.addData("LiftMotor Position: ", liftMotor.getCurrentPosition());
+            telemetry.addData("right Position: ", rightClaw.getPosition());
+            telemetry.addData("right direction: ", rightClaw.getDirection());
+            telemetry.addData("left: ", leftClaw.getPosition());
+            telemetry.addData("left Direction: ", leftClaw.getDirection());
             telemetry.update();
 
         }
